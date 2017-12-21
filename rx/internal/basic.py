@@ -1,4 +1,5 @@
 from datetime import datetime
+import sys
 
 
 # Defaults
@@ -30,6 +31,9 @@ def default_key_serializer(x):
 
 def default_error(err):
     if isinstance(err, BaseException):
+        exc_type, exc_value, exc_tb = sys.exc_info()
+        if err == exc_value:
+            raise exc_type, exc_value, exc_tb
         raise err
     else:
         raise Exception(err)
